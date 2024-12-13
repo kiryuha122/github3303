@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Возраст пользователя</title>
+    <script>
+        // Функция для получения значения Cookie по имени
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Функция для установки Cookie
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days*24*60*60*1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = `${name}=${value}; ${expires}; path=/`;
+        }
+
+        // Проверяем, есть ли Cookie с возрастом
+        window.onload = function() {
+            const userAge = getCookie('userAge');
+            if (userAge) {
+                alert(`Ваш возраст: ${userAge}`);
+            } else {
+                const age = prompt("Пожалуйста, введите ваш возраст:");
+                if (age) {
+                    setCookie('userAge', age, 7); // Сохраняем Cookie на 7 дней
+                    alert(`Ваш возраст сохранен: ${age}`);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
